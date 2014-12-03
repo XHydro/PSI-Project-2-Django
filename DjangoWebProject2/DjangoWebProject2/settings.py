@@ -13,7 +13,7 @@ ALLOWED_HOSTS = (
 )
 
 ADMINS = (
-     ('admin', 'admin@admin.com'),
+    # ('Your Name', 'your_email@example.com'),
 )
 
 MANAGERS = ADMINS
