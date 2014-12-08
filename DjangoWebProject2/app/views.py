@@ -47,3 +47,14 @@ def about(request):
             'year':datetime.now().year,
         })
     )
+
+
+from django.template import loader, Context
+from django.http import HttpResponse
+from app.models import app
+def archive(request):
+    posts = app.objects.all()
+    t = loa
+    der.get_template("my_template.html")
+    c = Context({'posts':posts})
+    return HttpResponse(t.render(c))

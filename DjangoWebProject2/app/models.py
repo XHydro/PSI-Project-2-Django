@@ -11,4 +11,8 @@ class app(models.Model):
     body = models.TextField()
     timestamp = models.DateTimeField()
 
-admin.site.register(app)
+class appAdmin(admin.ModelAdmin):
+    list_display = ('title','timestamp')
+
+#admin.site.register(app)
+admin.site.register(app, appAdmin)

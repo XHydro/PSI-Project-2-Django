@@ -1,7 +1,6 @@
 """
 Definition of urls for DjangoWebProject2.
 """
-
 from datetime import datetime
 from django.conf.urls import patterns, url
 from app.forms import BootstrapAuthenticationForm
@@ -41,3 +40,4 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
 )
+
