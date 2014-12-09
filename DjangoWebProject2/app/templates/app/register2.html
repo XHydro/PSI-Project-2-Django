@@ -1,0 +1,18 @@
+﻿{% extends "app/layout.html" %}
+
+{% block content %}
+
+<h2>{{ title }}</h2>
+
+
+<h1>Siemanko {{ username }}!!</h1>
+<h2>Mail {{ email }}!!</h2>
+<h3>Hasło {{ password }}!!</h3>
+
+{% endblock %}
+
+
+{% block scripts %}
+    {% load staticfiles %}
+    <script src="{% static 'app/scripts/jquery.validate.min.js' %}"></script>
+{% endblock %}

@@ -50,6 +50,25 @@ def about(request):
 
 def register(request):
     """Renders the contact page."""
+    if request.method == 'POST': 
+        request.POST.get("title", "")
+
+        username = request.POST['username'];
+        email = request.POST['email'];
+        password = request.POST['password'];
+
+        return render(
+            request,
+            'app/register2.html',
+            context_instance = RequestContext(request,
+            {
+                'title' : 'Register2',
+                'username': username,
+                'email': email,
+                'password' : password,
+            })
+        )
+
     assert isinstance(request, HttpRequest)
     return render(
         request,
@@ -62,9 +81,7 @@ def register(request):
     )
 
 def register2(request):#in progres..
-    username = request.POST['username'];
-    email = request.POST['email'];
-    password = request.POST['password'];
+
 
     assert isinstance(request, HttpRequest)
     return render(
@@ -76,6 +93,7 @@ def register2(request):#in progres..
             'message':'Register Your account.',
         })
     )
+
 
 #from django.contrib.auth import authenticate, login
 
