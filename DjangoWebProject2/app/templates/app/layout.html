@@ -23,13 +23,7 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="{% url 'home' %}">Home</a></li>
-                    <li><a href="{% url 'about' %}">About</a></li>
-                    <li><a href="{% url 'contact' %}">Contact</a></li>
-                    {% if user.is_authenticated %}
-                    {% csrf_token %}
-                    <li><a href="{% url 'books' %}">Books</a></li>
-                    {% endif %}
+                    {% include 'app/navbarpartial.html' %}
                 </ul>
                 {% include 'app/loginpartial.html' %}
             </div>
