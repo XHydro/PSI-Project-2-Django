@@ -48,7 +48,51 @@ def about(request):
         })
     )
 
+def register(request):
+    """Renders the contact page."""
+    assert isinstance(request, HttpRequest)
+    return render(
+        request,
+        'app/register.html',
+        context_instance = RequestContext(request,
+        {
+            'title':'Register',
+            'message':'Register Your account.',
+        })
+    )
 
+def register2(request):#in progres..
+    username = request.POST['username'];
+    email = request.POST['email'];
+    password = request.POST['password'];
+
+    assert isinstance(request, HttpRequest)
+    return render(
+        request,
+        'app/register.html',
+        context_instance = RequestContext(request,
+        {
+            'title':'Register',
+            'message':'Register Your account.',
+        })
+    )
+
+#from django.contrib.auth import authenticate, login
+
+#def my_view(request):
+#    username = request.POST['username']
+#    password = request.POST['password']
+#    user = authenticate(username=username, password=password)
+#    if user is not None:
+#        if user.is_active:
+#            login(request, user)
+#            # Redirect to a success page.
+#        else:
+#            # Return a 'disabled account' error message
+#    else:
+#        # Return an 'invalid login' error message.
+
+        
 from django.template import loader, Context
 from django.http import HttpResponse
 from app.models import app
@@ -58,3 +102,5 @@ def archive(request):
     der.get_template("my_template.html")
     c = Context({'posts':posts})
     return HttpResponse(t.render(c))
+
+

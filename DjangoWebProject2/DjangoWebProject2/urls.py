@@ -10,11 +10,15 @@ from django.conf.urls import include
 from django.contrib import admin
 admin.autodiscover()
 
+import app.urls; #robert
+
 urlpatterns = patterns('',
     # Examples:
+
     url(r'^$', 'app.views.home', name='home'),
     url(r'^contact$', 'app.views.contact', name='contact'),
     url(r'^about', 'app.views.about', name='about'),
+    url(r'^app/', include(app.urls)), #robert
     url(r'^login/$',
         'django.contrib.auth.views.login',
         {
@@ -27,6 +31,10 @@ urlpatterns = patterns('',
             }
         },
         name='login'),
+    #url(r'^login', 'app.views.login', name='login'), #robert
+
+    url(r'^register/$', 'app.views.register', name='register'), #robert
+
     url(r'^logout$',
         'django.contrib.auth.views.logout',
         {
