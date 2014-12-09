@@ -24,8 +24,6 @@ C:\Users\robi2_000\Desktop\Nowy folder (2)\DjangoWebProject2\bin\AzureSetup.cfg
 C:\Users\robi2_000\Desktop\Nowy folder (2)\DjangoWebProject2\bin\Microsoft.PythonTools.AzureSetup.exe
 C:\Users\robi2_000\Desktop\Nowy folder (2)\DjangoWebProject2\bin\Microsoft.PythonTools.AzureSetup.exe.config
 C:\Users\robi2_000\Desktop\Nowy folder (2)\DjangoWebProject2\bin\wfastcgi.py
-C:\Users\robi2_000\Desktop\Nowy folder (2)\DjangoWebProject2\obj\Debug\deployment-updated-pyvenv.cfg
-C:\Users\robi2_000\Desktop\Nowy folder (2)\DjangoWebProject2\ptvs_virtualenv_proxy.py
 C:\Users\robi2_000\Desktop\Nowy folder (2)\DjangoWebProject2\obj\Debug\web.config
 C:\Users\robi2_000\Desktop\Nowy folder (2)\DjangoWebProject2\obj\Debug\web.debug.config
 D:\DjangoWebProject2\DjangoWebProject2\bin\Microsoft.PythonTools.WebRole.dll
