@@ -40,3 +40,37 @@ input[type="checkbox"].input-validation-error {
 .validation-summary-valid {
     display: none;
 }
+
+
+/*Parker Tabela*/
+table {
+    text-align: center;
+    border: 1px solid; width: 50%;
+ text-align: left;
+ margin: 0 auto 0 auto; /* można zapisać krócej: margin: 0 auto; */
+	display: table;
+	border-collapse: separate;
+	border-spacing: 2px;
+	border-color: gray;
+}
+
+table td {
+	background: #E0E0E0;
+}
+
+.first {
+	background: #191919;
+}
+
+table td, table th {
+	text-align: left;
+	padding: .4em .8em;
+	color:#666;
+}
+table th {
+    background: rgba(0, 0, 0, 100)
+}
+
+h2{
+    text-align: center;
+}

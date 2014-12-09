@@ -31,3 +31,8 @@ class ViewTest(TestCase):
         """Tests the about page."""
         response = self.client.get('/about')
         self.assertContains(response, 'About', 3, 200)
+
+    def test_books(self):
+        """Tests the books page."""
+        response = self.client.get('/books')
+        self.assertContains(response, 'Books', 3, 200)

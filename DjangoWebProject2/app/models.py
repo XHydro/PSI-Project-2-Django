@@ -16,3 +16,8 @@ class appAdmin(admin.ModelAdmin):
 
 #admin.site.register(app)
 admin.site.register(app, appAdmin)
+
+class Book(models.Model):
+    title = models.CharField(max_length = 150)
+    about = models.TextField()
+    timestamp = models.DateField()

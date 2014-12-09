@@ -48,11 +48,31 @@ def about(request):
         })
     )
 
+from app.models import Book
+
+def books(request):
+    """Renders the about page."""
+    books = Book.objects.all()
+    t = loader.get_template("app/books.html")
+    c = Context({'books':books})
+    return HttpResponse(t.render(c))
+    #assert isinstance(request, HttpRequest)
+    #return render(
+    #    request,
+    #    'app/books.html',
+    #    context_instance = RequestContext(request,
+    #    {
+    #        'title':'Books',
+    #        'message':'Your application description page.',
+    #        'year':datetime.now().year,
+    #    })
+    #)
+
 def register(request):
     """Renders the contact page."""
     if request.method == 'POST': 
         request.POST.get("title", "")
-
+        
         username = request.POST['username'];
         email = request.POST['email'];
         password = request.POST['password'];
