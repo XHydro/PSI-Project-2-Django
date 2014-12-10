@@ -46,8 +46,8 @@ input[type="checkbox"].input-validation-error {
 table {
     text-align: center;
     border: 1px solid; width: 50%;
- text-align: left;
- margin: 0 auto 0 auto; /* można zapisać krócej: margin: 0 auto; */
+    text-align: left;
+    margin: 0 auto 0 auto; /* można zapisać krócej: margin: 0 auto; */
 	display: table;
 	border-collapse: separate;
 	border-spacing: 2px;
@@ -59,13 +59,14 @@ table td {
 }
 
 .first {
-	background: #191919;
+	/*background: #191919;*/
+    background: #333
 }
 
 table td, table th {
 	text-align: left;
 	padding: .4em .8em;
-	color:#666;
+	color:#999;
 }
 table th {
     background: rgba(0, 0, 0, 100)
@@ -73,4 +74,24 @@ table th {
 
 h2{
     text-align: center;
+}
+
+/* unvisited link */
+a:link {
+    color: #999;
+}
+
+/* visited link */
+a:visited {
+    color: #999;
+}
+
+/* mouse over link */
+a:hover {
+    color: #999;
+}
+
+/* selected link */
+a:active {
+    color: #999;
 }

@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="app\" />
+    <Folder Include="app\fixtures\" />
     <Folder Include="app\static\" />
     <Folder Include="app\static\app\" />
     <Folder Include="app\static\app\content\" />
@@ -56,9 +57,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\templates\app\books.html" />
+    <Content Include="app\templates\app\book_form.html" />
     <Content Include="app\templates\app\my_template.html" />
     <Content Include="app\templates\app\register2.html" />
     <Content Include="app\templates\app\register.html" />
+    <Content Include="app\templates\app\single_book.html" />
     <Content Include="requirements.txt" />
     <Content Include="db.sqlite3" />
     <Content Include="app\static\app\content\bootstrap.css" />

@@ -3,17 +3,23 @@
 <h2>Książki</h2>
 <table>
 <tr>
-	<td class="first">Tytuł</td>	<td class="first">O czym</td> <td class="first">Kiedy powstała</td>
+	<td class="first">Tytuł</td>	{#<td class="first">Autor</td>#} <td class="first">Kiedy powstała</td>
 </tr>
 
 
 {% for book in books %}
-<tr>
-	<td>{{ book.title }}</td>	<td>{{ book.about }}</td> <td>{{ book.timestamp }}</td>
-</tr>
+
+    <tr>
+	    <td><a href="./{{ book.id }}">{{ book.title }}</a></td>	{#<td>{{ book.author }}</td>#} <td>{{ book.timestamp }}</td>
+    </tr>
+
 
 {% endfor %}
 </table>
+{% block new %}
+<br />
+<center><a href="./nowy/">Dodaj ksiazke</a></center><br>
+{% endblock%}
 {% endblock %}
 
 

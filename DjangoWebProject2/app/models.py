@@ -18,6 +18,10 @@ class appAdmin(admin.ModelAdmin):
 admin.site.register(app, appAdmin)
 
 class Book(models.Model):
-    title = models.CharField(max_length = 150)
-    about = models.TextField()
-    timestamp = models.DateField()
+    title = models.CharField(max_length = 30)
+    about = models.CharField(max_length = 150)
+    #author = models.CharField(max_length = 50)
+    timestamp = models.CharField(max_length = 4)
+    #timestamp = models.DateField()
+    #class Meta:
+    #    ordering = ('-timestamp',)

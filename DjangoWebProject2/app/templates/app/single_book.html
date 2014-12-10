@@ -1,0 +1,8 @@
+﻿{% extends "app/layout.html" %}
+{% block content %}
+<h2>{{ book.title }}</h2>
+<p>Rok wydania: {{ book.timestamp }}</p>
+<p>Opis: {{ book.about }}</p>
+<center><a href="./books">Usuń ta ksiazke</a><br/>
+<a href="./edit/{{ post.id }}/">Edytuj ta ksiazke</a><br/></center>
+{% endblock %}

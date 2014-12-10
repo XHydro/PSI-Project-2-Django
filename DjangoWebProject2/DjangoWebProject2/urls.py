@@ -9,7 +9,10 @@ from app.forms import BootstrapAuthenticationForm
 from django.conf.urls import include
 from django.contrib import admin
 admin.autodiscover()
-
+from app.views import singlebook
+from app.views import new_entry
+from app.views import deletebook
+from app.views import editbook
 import app.urls; #robert
 
 urlpatterns = patterns('',
@@ -19,6 +22,10 @@ urlpatterns = patterns('',
     url(r'^contact$', 'app.views.contact', name='contact'),
     url(r'^about', 'app.views.about', name='about'),
     url(r'^books', 'app.views.books', name='books'),
+    url(r'^(?P<book_id>\d+)$', singlebook),
+    url(r'^nowy/$', new_entry),
+    url(r'^(?P<book_id>\d+)/$', deletebook),
+    url(r'^edit/(?P<book_id>\d+)/$', editbook),
     url(r'^app/', include(app.urls)), #robert
     url(r'^login/$',
         'django.contrib.auth.views.login',

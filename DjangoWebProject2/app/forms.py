@@ -16,3 +16,10 @@ class BootstrapAuthenticationForm(AuthenticationForm):
                                widget=forms.PasswordInput({
                                    'class': 'form-control',
                                    'placeholder':'Password'}))
+
+# -*- coding: utf-8 -*-
+from django import forms
+class BookForm(forms.Form):
+    title = forms.CharField(max_length=10, required=True, label='Podaj tytul ksiazki', error_messages={'required': 'Wpisz jak?s wartosc?!!','max_length': 'Za dlugi wpis!!!'})
+    about = forms.CharField(required=True, widget=forms.Textarea, label='Podaj opis ksiazki', error_messages={'required': 'Wpisz jaks wartosc!!'})
+    timestamp = forms.CharField(max_length=4, required=True, label='Podaj rok napisania ksiazki', error_messages={'required': 'Wpisz jaks wartosc!!'})
