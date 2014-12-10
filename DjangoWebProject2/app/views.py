@@ -29,7 +29,7 @@ def contact(request):
         context_instance = RequestContext(request,
         {
             'title':'Contact',
-            'message':'Your contact page.',
+            'message':'Adress',
             'year':datetime.now().year,
         })
     )
