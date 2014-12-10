@@ -2,8 +2,9 @@
 
 {% block content %}
 
-<h2>{{ title }}.</h2>
+<h2>{{ title }} with My Django Library TEAM</h2>
 <h3>{{ message }}</h3>
+
 
 <address>
     One Microsoft Way<br />
@@ -12,9 +13,31 @@
     425.555.0100
 </address>
 
+<div class="row">
+    <div class="col-md-6">
+        <h2>Django Team</h2>
+        <p>
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+        </p>
+        <p>
+            <img class ="img-thumbnail" src="../../static/app/media/image1.jpg"/>
+            <img class ="img-thumbnail" src="../../static/app/media/image2.jpg"/>
+        </p>
+        
+    </div>
+    <div class="col-md-6">
+        <h2>Django Boss</h2>
+        <p>
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+        </p>
+        <p><img class ="img-thumbnail" src="../../static/app/media/image3.jpeg"/></p>
+    </div>
+</div>
+
+
 <address>
-    <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
-    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
+    <strong>Support:</strong>   <a href="mailto:Robert@library.com">Robert@library.com</a><br />
+    <strong>Marketing:</strong> <a href="mailto:Piotr@library.com">Piotr@library.com</a>
 </address>
 
 {% endblock %}
