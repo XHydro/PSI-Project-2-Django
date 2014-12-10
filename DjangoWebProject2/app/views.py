@@ -120,19 +120,23 @@ def new_entry(request):
         return render_to_response('app/book_form.html', ctx)
 
 def deletebook(request, book_id):
+    #request.method == 'GET':
+
     print(book_id)
     post = Book.objects.get(id=int(book_id))
     post.delete()
     return HttpResponseRedirect('/app/books.html')
 
 def editbook(request, book_id):
+    if request.method == 'GET':
+        print(request.GET)
     if request.method == 'POST':
         form = BookForm(request.POST)
         if form.is_valid():
             cd = form.cleaned_data
-            post = Book(id=book_id, title=cd['title'], about=cd['about'])
+            post = Book(id=book_id, title=cd['title'], about=cd['about'], timestamp=cd['timestamp'])
             post.save()
-            return HttpResponseRedirect('/app/')
+            return HttpResponseRedirect('../../books')
         else:
             ctx = Context({'form': form})
             ctx.update(csrf(request))
