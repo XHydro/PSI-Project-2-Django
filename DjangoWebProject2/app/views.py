@@ -53,9 +53,22 @@ from app.models import Book
 def books(request):
     """Renders the about page."""
     books = Book.objects.all()
-    t = loader.get_template("app/books.html")
-    c = Context({'books':books})
-    return HttpResponse(t.render(c))
+    assert isinstance(request, HttpRequest)
+    return render(
+        request,
+        'app/books.html',
+        context_instance = RequestContext(request,
+        {
+            'books':books,
+        })
+    )
+
+#def books(request):
+#    """Renders the about page."""
+#    books = Book.objects.all()
+#    t = loader.get_template("app/books.html")
+#    c = Context({'books':books})
+#    return HttpResponse(t.render(c))
     #assert isinstance(request, HttpRequest)
     #return render(
     #    request,
