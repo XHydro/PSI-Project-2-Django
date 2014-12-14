@@ -27,7 +27,6 @@
                     <li><a href="{% url 'about' %}">About</a></li>
                     <li><a href="{% url 'contact' %}">Contact</a></li>
                     {% if user.is_authenticated %}
-                    {% csrf_token %}
                     <li><a href="{% url 'books' %}">Books</a></li>
                     {% endif %}
                 </ul>

@@ -62,6 +62,8 @@
     <Content Include="app\templates\app\register2.html" />
     <Content Include="app\templates\app\register.html" />
     <Content Include="app\templates\app\single_book.html" />
+    <Content Include="app\templates\app\layoutpartial.html" />
+    <Content Include="app\templates\app\navbarpartial.html" />
     <Content Include="requirements.txt" />
     <Content Include="db.sqlite3" />
     <Content Include="app\static\app\content\bootstrap.css" />
