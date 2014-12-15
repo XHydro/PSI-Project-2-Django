@@ -24,7 +24,7 @@ urlpatterns = patterns('',
     url(r'^books', 'app.views.books', name='books'),
     url(r'^(?P<book_id>\d+)$', singlebook),
     url(r'^nowy/$', new_entry),
-    url(r'^(?P<book_id>\d+)$', deletebook),
+    url(r'^delete/(?P<book_id>\d+)$', deletebook),
     url(r'^edit/(?P<book_id>\d+)/$', editbook),
     url(r'^app/', include(app.urls)), #robert
     url(r'^login/$',

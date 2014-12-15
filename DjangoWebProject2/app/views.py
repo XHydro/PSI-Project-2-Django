@@ -119,13 +119,52 @@ def new_entry(request):
         ctx.update(csrf(request))
         return render_to_response('app/book_form.html', ctx)
 
-def deletebook(request, book_id):
-    #request.method == 'GET':
+#---------------------------------------------------------------------
+from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
 
-    print(book_id)
-    post = Book.objects.get(id=int(book_id))
-    post.delete()
-    return HttpResponseRedirect('/app/books.html')
+TEMPLATE_CONTEXT_PROCESSORS = TCP + (
+    'django.core.context_processors.request',
+)
+from django.shortcuts import render_to_response
+from django.template import RequestContext
+
+def index(request):
+    return render_to_response(
+        'user/profile.html',
+        { 'title': 'User profile' },
+        context_instance=RequestContext(request)
+    )
+
+def get_current_path(request):
+    return {
+       'current_path': request.get_full_path()
+     }
+
+
+def deletebook(request, book_id):
+    if request.method == 'GET':
+        print(request.GET)
+    if request.method == 'POST':
+        form = BookForm(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            post = Book(id=book_id, title=cd['title'], about=cd['about'], timestamp=cd['timestamp'])
+            post.delete()
+            return HttpResponseRedirect('/books.html')
+        else:
+            return render_to_response('app/book_form.html', ctx)
+    else:
+        post = Book.objects.get(id=int(book_id))
+        post.delete()
+        return HttpResponseRedirect('/books.html')
+
+    ##request.method == 'GET':
+    #request.path 
+    #print(book_id)
+    #post = Book.objects.get(id=int(book_id))
+    #post.delete()
+    ##return HttpResponseRedirect('/app/books.html')
+    #return HttpResponse('/app/books.html',)
 
 def editbook(request, book_id):
     if request.method == 'GET':
@@ -143,7 +182,7 @@ def editbook(request, book_id):
             return render_to_response('app/book_form.html', ctx)
     else:
         post = Book.objects.get(id=int(book_id))
-        data = {'title': post.title, 'about': post.about}
+        data = {'title': post.title, 'about': post.about, 'timestamp': post.timestamp}
         post_form = BookForm(initial=data)
         ctx = Context({'form': post_form})
         ctx.update(csrf(request))
