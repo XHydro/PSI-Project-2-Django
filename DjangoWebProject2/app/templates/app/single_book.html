@@ -21,6 +21,8 @@
     {% for comment in comments %}
     <li>
         {{ comment.body }}
+        <br />
+        <p>Wyslane: {{ comment.timestamp }}</p>
     </li>
     {% endfor %}
 </ul>
