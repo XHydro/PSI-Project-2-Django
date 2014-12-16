@@ -25,3 +25,10 @@ class Book(models.Model):
     
 class Author(models.Model):
     name = models.CharField(max_length = 50)
+
+class BookComment(models.Model):
+    body = models.TextField()
+    timestamp = models.DateTimeField(auto_now=True)
+    post = models.ForeignKey(Book, related_name='comments')
+    class Meta:
+        ordering = ('-timestamp',)

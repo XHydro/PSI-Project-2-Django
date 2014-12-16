@@ -92,13 +92,32 @@ from django.template import RequestContext
 from datetime import datetime
 from django.views.decorators.csrf import csrf_exempt
 
+from app.models import BookComment
+
 def singlebook(request, book_id):
     print(book_id)
     book = Book.objects.get(id=int(book_id))
-    print(book.title)
-    return render_to_response('app/single_book.html', {'book':book})
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            comment = BookComment(body=cd['body'])
+            comment.post = book
+            comment.save()
+    comments = book.comments.all
+    commentform = CommentForm()
+    ctx = {'book':book, 'form':commentform, 'comments':comments}
+    ctx.update(csrf(request))
+    return render_to_response('app/single_book.html', ctx)
+
+    #print(book_id)
+    #book = Book.objects.get(id=int(book_id))
+    #print(book.title)
+    #return render_to_response('app/single_book.html', {'book':book})
+
 
 from app.forms import BookForm
+from app.forms import CommentForm
 from django.core.context_processors import csrf
 def new_entry(request):
     if request.method == 'POST':

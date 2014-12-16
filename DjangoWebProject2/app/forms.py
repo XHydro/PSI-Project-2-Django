@@ -20,6 +20,10 @@ class BootstrapAuthenticationForm(AuthenticationForm):
 # -*- coding: utf-8 -*-
 from django import forms
 class BookForm(forms.Form):
-    title = forms.CharField(max_length=10, required=True, label='Podaj tytul ksiazki', error_messages={'required': 'Wpisz jak?s wartosc?!!','max_length': 'Za dlugi wpis!!!'})
+    title = forms.CharField(max_length=30, required=True, label='Podaj tytul ksiazki', error_messages={'required': 'Wpisz jakas wartosc!!','max_length': 'Za dlugi wpis!!!'})
     about = forms.CharField(required=True, widget=forms.Textarea, label='Podaj opis ksiazki', error_messages={'required': 'Wpisz jaks wartosc!!'})
     timestamp = forms.CharField(max_length=4, required=True, label='Podaj rok napisania ksiazki', error_messages={'required': 'Wpisz jaks wartosc!!'})
+
+#komentarze do ksiazki
+class CommentForm(forms.Form):
+    body = forms.CharField(label='Wpisz komentarz', required=True, error_messages={'required': 'Wpisano pusty komentarz!'})

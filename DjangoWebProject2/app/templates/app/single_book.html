@@ -3,11 +3,25 @@
 <h2>{{ book.title }}</h2>
 <p>Year: {{ book.timestamp }}</p>
 <p>Description: {{ book.about }}</p>
-<p>Ala ma kota: {{ current_path }}</p>
-{#<center><a href="./books?post={{ book.id }}">Usuń ta ksiazke</a><br/>#}
-    {#<center><a href="./books/{{ book.id }}">Delete Book</a><br/>#}
 <center>
     <a href="./delete/{{ book.id }}">Delete Book</a><br/>
     <a href="./edit/{{ book.id }}/">Edit Book</a><br/>
 </center>
+<br />
+<p>Comments:</p>
+<form action="" method="post">
+    {% csrf_token %} {#cross site request forgery protection#}
+    <table>
+        {{ form.as_table }}
+    </table>
+    <br />
+    <center><input type="submit" value="Submit"></center>
+</form>
+<ul>
+    {% for comment in comments %}
+    <li>
+        {{ comment.body }}
+    </li>
+    {% endfor %}
+</ul>
 {% endblock %}
