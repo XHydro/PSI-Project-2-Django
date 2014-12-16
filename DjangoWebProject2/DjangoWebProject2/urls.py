@@ -24,36 +24,51 @@ urlpatterns = patterns('',
     url(r'^books', 'app.views.books', name='books'),
     url(r'^(?P<book_id>\d+)$', singlebook),
     url(r'^nowy/$', new_entry),
-    url(r'^delete/(?P<book_id>\d+)$', deletebook),
+    url(r'^(?P<book_id>\d+)$', deletebook),
     url(r'^edit/(?P<book_id>\d+)/$', editbook),
     url(r'^app/', include(app.urls)), #robert
-    url(r'^login/$',
-        'django.contrib.auth.views.login',
-        {
-            'template_name': 'app/login.html',
-            'authentication_form': BootstrapAuthenticationForm,
-            'extra_context':
-            {
-                'title':'Log in',
-                'year':datetime.now().year,
-            }
-        },
-        name='login'),
+   
+
+   #DOMY?LNE LOGOWANIE JAKIE BY?O WCZE?NIEJ
+    #url(r'^login/$',
+    #    'django.contrib.auth.views.login',
+    #    {
+    #        'template_name': 'app/login.html',
+    #        'authentication_form': BootstrapAuthenticationForm,
+    #        'extra_context':
+    #        {
+    #            'title':'Log in',
+    #            'year':datetime.now().year,
+    #        }
+    #    },
+    #    name='login'),
     #url(r'^login', 'app.views.login', name='login'), #robert
 
-    url(r'^register/$', 'app.views.register', name='register'), #robert
+    #url(r'^register/$', 'app.views.register', name='register'), #robert
 
-    url(r'^logout$',
-        'django.contrib.auth.views.logout',
-        {
-            'next_page': '/',
-        },
-        name='logout'),
+    #DOMY?LNE WYLOGOWYWANIE JAKIE BY?O WCZE?NIEJ
+    #url(r'^logout$',
+    #    'django.contrib.auth.views.logout',
+    #    {
+    #        'next_page': '/',
+    #    },
+    #    name='logout'),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
+
+
+    #Login by Robi24
+    url(r'^login/$', 'app.views.login'),
+    url(r'^auth/$', 'app.views.auth_view'),
+    url(r'^logout/$', 'app.views.logout'),
+    url(r'^log_in/$', 'app.views.log_in'),
+    url(r'^invalid/$', 'app.views.invalid_login'),
+    #Register
+    url(r'^register/$', 'app.views.register'),
+    url(r'^register_success/$','app.views.register_success'),
 )
 

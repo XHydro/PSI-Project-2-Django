@@ -32,4 +32,6 @@ class BookComment(models.Model):
     timestamp = models.DateTimeField(auto_now=True)
     post = models.ForeignKey(Book, related_name='comments')
     class Meta:
-        ordering = ('-timestamp',)
+        ordering = ('-timestamp',)    #timestamp = models.DateField()
+    #class Meta:
+    #    ordering = ('-timestamp',)
