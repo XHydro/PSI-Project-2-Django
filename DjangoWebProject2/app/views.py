@@ -42,8 +42,8 @@ def about(request):
         'app/about.html',
         context_instance = RequestContext(request,
         {
-            'title':'About',
-            'message':'Your application description page.',
+            'title':'About Django Library',
+            'message':'We making the world better...',
             'year':datetime.now().year,
         })
     )
@@ -52,16 +52,19 @@ from app.models import Book
 
 def books(request):
     """Renders the about page."""
-    books = Book.objects.all()
-    assert isinstance(request, HttpRequest)
-    return render(
-        request,
-        'app/books.html',
-        context_instance = RequestContext(request,
-        {
-            'books':books,
-        })
-    )
+    if request.user.is_authenticated():
+        books = Book.objects.all()
+        assert isinstance(request, HttpRequest)
+        return render(
+            request,
+            'app/books.html',
+            context_instance = RequestContext(request,
+            {
+                'books':books,
+            })
+        )
+    else:
+        return render_to_response('app/index.html')
 
 
 from app.views import *
@@ -76,20 +79,23 @@ from django.views.decorators.csrf import csrf_exempt
 from app.models import BookComment
 
 def singlebook(request, book_id):
-    print(book_id)
-    book = Book.objects.get(id=int(book_id))
-    if request.method == 'POST':
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            cd = form.cleaned_data
-            comment = BookComment(body=cd['body'])
-            comment.post = book
-            comment.save()
-    comments = book.comments.all
-    commentform = CommentForm()
-    ctx = {'book':book, 'form':commentform, 'comments':comments}
-    ctx.update(csrf(request))
-    return render_to_response('app/single_book.html', ctx)
+    if request.user.is_authenticated():
+        print(book_id)
+        book = Book.objects.get(id=int(book_id))
+        if request.method == 'POST':
+            form = CommentForm(request.POST)
+            if form.is_valid():
+                cd = form.cleaned_data
+                comment = BookComment(body=cd['body'])
+                comment.post = book
+                comment.save()
+        comments = book.comments.all
+        commentform = CommentForm()
+        ctx = {'book':book, 'form':commentform, 'comments':comments}
+        ctx.update(csrf(request))
+        return render_to_response('app/single_book.html', ctx)
+    else:
+         return render_to_response('app/index.html')
 
     #print(book_id)
     #book = Book.objects.get(id=int(book_id))
@@ -101,53 +107,62 @@ from app.forms import BookForm
 from app.forms import CommentForm
 from django.core.context_processors import csrf
 def new_entry(request):
-    if request.method == 'POST':
-        form = BookForm(request.POST)
-        if form.is_valid():
-            cd = form.cleaned_data
-            print(cd)
-            post = Book(title=cd['title'], about=cd['about'], timestamp=cd['timestamp'])
-            post.save()
-            return HttpResponseRedirect('/books.html')
+    if  request.session['user'] == 'admin':
+        if request.method == 'POST':
+            form = BookForm(request.POST)
+            if form.is_valid():
+                cd = form.cleaned_data
+                print(cd)
+                post = Book(title=cd['title'], about=cd['about'], timestamp=cd['timestamp'])
+                post.save()
+                return HttpResponseRedirect('/books.html')
+            else:
+                ctx = Context({'form': form})
+                ctx.update(csrf(request))
+                return render_to_response('app/book_form.html', ctx)
         else:
+            form = BookForm()
             ctx = Context({'form': form})
             ctx.update(csrf(request))
             return render_to_response('app/book_form.html', ctx)
-    else:
-        form = BookForm()
-        ctx = Context({'form': form})
-        ctx.update(csrf(request))
-        return render_to_response('app/book_form.html', ctx)
+    else: 
+        return render_to_response('app/index.html');
 
 def deletebook(request, book_id):
     #request.method == 'GET':
-
-    print(book_id)
-    post = Book.objects.get(id=int(book_id))
-    post.delete()
-    return HttpResponseRedirect('/app/books.html')
+     if  request.session['user'] == 'admin':
+        print(book_id)
+        post = Book.objects.get(id=int(book_id))
+        post.delete()
+        return HttpResponseRedirect('/app/books.html')
+     else: 
+        return render_to_response('app/index.html');
 
 def editbook(request, book_id):
-    if request.method == 'GET':
-        print(request.GET)
-    if request.method == 'POST':
-        form = BookForm(request.POST)
-        if form.is_valid():
-            cd = form.cleaned_data
-            post = Book(id=book_id, title=cd['title'], about=cd['about'], timestamp=cd['timestamp'])
-            post.save()
-            return HttpResponseRedirect('../../books')
-        else:
-            ctx = Context({'form': form})
-            ctx.update(csrf(request))
-            return render_to_response('app/book_form.html', ctx)
-    else:
-        post = Book.objects.get(id=int(book_id))
-        data = {'title': post.title, 'about': post.about}
-        post_form = BookForm(initial=data)
-        ctx = Context({'form': post_form})
-        ctx.update(csrf(request))
-        return render_to_response('app/book_form.html', ctx)
+    if request.user.is_authenticated():
+        if request.session['user'] == 'admin':
+            if request.method == 'GET':
+                print(request.GET)
+            if request.method == 'POST':
+                form = BookForm(request.POST)
+                if form.is_valid():
+                    cd = form.cleaned_data
+                    post = Book(id=book_id, title=cd['title'], about=cd['about'], timestamp=cd['timestamp'])
+                    post.save()
+                    return HttpResponseRedirect('../../books')
+                else:
+                    ctx = Context({'form': form})
+                    ctx.update(csrf(request))
+                    return render_to_response('app/book_form.html', ctx)
+            else:
+                post = Book.objects.get(id=int(book_id))
+                data = {'title': post.title, 'about': post.about}
+                post_form = BookForm(initial=data)
+                ctx = Context({'form': post_form})
+                ctx.update(csrf(request))
+                return render_to_response('app/book_form.html', ctx)
+        else:  return render_to_response('app/index.html');
+    else:  return render_to_response('app/index.html');
 
 
 
@@ -183,6 +198,7 @@ def auth_view(request):
 
     if user is not None:
         auth.login(request, user)
+        request.session['user'] = username
         return HttpResponseRedirect('/')
     else:
         return HttpResponseRedirect('/invalid')
@@ -198,16 +214,19 @@ def logout(request):
     return render_to_response('app/logout.html');
 
 def register(request):
-    if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect('/register_success')
-    args = {}
-    args.update(csrf(request))
-    args['form'] = UserCreationForm()
+    if request.user.is_authenticated():
+        return render_to_response('app/index.html');
+    else:
+        if request.method == 'POST':
+            form = UserCreationForm(request.POST)
+            if form.is_valid():
+                form.save()
+                return HttpResponseRedirect('/register_success')
+        args = {}
+        args.update(csrf(request))
+        args['form'] = UserCreationForm()
 
-    return render_to_response('app/register.html',args)
+        return render_to_response('app/register.html',args)
 
 def register_success(request):
     return render_to_response('app/register_success.html')
