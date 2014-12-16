@@ -21,7 +21,7 @@ class Book(models.Model):
     title = models.CharField(max_length = 30)
     about = models.CharField(max_length = 150)
     #author = models.CharField(max_length = 50)
-    authors = models.ManyToManyField(Author, related_name = 'books')
+    #authors = models.ManyToManyField(Author, related_name = 'books')
     timestamp = models.CharField(max_length = 4)
     
 class Author(models.Model):
