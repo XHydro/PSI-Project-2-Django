@@ -63,30 +63,11 @@ def books(request):
         })
     )
 
-#def books(request):
-#    """Renders the about page."""
-#    books = Book.objects.all()
-#    t = loader.get_template("app/books.html")
-#    c = Context({'books':books})
-#    return HttpResponse(t.render(c))
-    #assert isinstance(request, HttpRequest)
-    #return render(
-    #    request,
-    #    'app/books.html',
-    #    context_instance = RequestContext(request,
-    #    {
-    #        'title':'Books',
-    #        'message':'Your application description page.',
-    #        'year':datetime.now().year,
-    #    })
-    #)
 
 from app.views import *
 from django.template import loader, Context
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
-#from app.models import BookPost
-#from app.forms import BookForm
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from datetime import datetime
@@ -119,52 +100,13 @@ def new_entry(request):
         ctx.update(csrf(request))
         return render_to_response('app/book_form.html', ctx)
 
-#---------------------------------------------------------------------
-from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
-
-TEMPLATE_CONTEXT_PROCESSORS = TCP + (
-    'django.core.context_processors.request',
-)
-from django.shortcuts import render_to_response
-from django.template import RequestContext
-
-def index(request):
-    return render_to_response(
-        'user/profile.html',
-        { 'title': 'User profile' },
-        context_instance=RequestContext(request)
-    )
-
-def get_current_path(request):
-    return {
-       'current_path': request.get_full_path()
-     }
-
-
 def deletebook(request, book_id):
-    if request.method == 'GET':
-        print(request.GET)
-    if request.method == 'POST':
-        form = BookForm(request.POST)
-        if form.is_valid():
-            cd = form.cleaned_data
-            post = Book(id=book_id, title=cd['title'], about=cd['about'], timestamp=cd['timestamp'])
-            post.delete()
-            return HttpResponseRedirect('/books.html')
-        else:
-            return render_to_response('app/book_form.html', ctx)
-    else:
-        post = Book.objects.get(id=int(book_id))
-        post.delete()
-        return HttpResponseRedirect('/books.html')
+    #request.method == 'GET':
 
-    ##request.method == 'GET':
-    #request.path 
-    #print(book_id)
-    #post = Book.objects.get(id=int(book_id))
-    #post.delete()
-    ##return HttpResponseRedirect('/app/books.html')
-    #return HttpResponse('/app/books.html',)
+    print(book_id)
+    post = Book.objects.get(id=int(book_id))
+    post.delete()
+    return HttpResponseRedirect('/app/books.html')
 
 def editbook(request, book_id):
     if request.method == 'GET':
@@ -182,76 +124,14 @@ def editbook(request, book_id):
             return render_to_response('app/book_form.html', ctx)
     else:
         post = Book.objects.get(id=int(book_id))
-        data = {'title': post.title, 'about': post.about, 'timestamp': post.timestamp}
+        data = {'title': post.title, 'about': post.about}
         post_form = BookForm(initial=data)
         ctx = Context({'form': post_form})
         ctx.update(csrf(request))
         return render_to_response('app/book_form.html', ctx)
 
 
-def register(request):
-    """Renders the contact page."""
-    if request.method == 'POST': 
-        request.POST.get("title", "")
-        
-        username = request.POST['username'];
-        email = request.POST['email'];
-        password = request.POST['password'];
 
-        return render(
-            request,
-            'app/register2.html',
-            context_instance = RequestContext(request,
-            {
-                'title' : 'Register2',
-                'username': username,
-                'email': email,
-                'password' : password,
-            })
-        )
-
-    assert isinstance(request, HttpRequest)
-    return render(
-        request,
-        'app/register.html',
-        context_instance = RequestContext(request,
-        {
-            'title':'Register',
-            'message':'Register Your account.',
-        })
-    )
-
-def register2(request):#in progres..
-
-
-    assert isinstance(request, HttpRequest)
-    return render(
-        request,
-        'app/register.html',
-        context_instance = RequestContext(request,
-        {
-            'title':'Register',
-            'message':'Register Your account.',
-        })
-    )
-
-
-#from django.contrib.auth import authenticate, login
-
-#def my_view(request):
-#    username = request.POST['username']
-#    password = request.POST['password']
-#    user = authenticate(username=username, password=password)
-#    if user is not None:
-#        if user.is_active:
-#            login(request, user)
-#            # Redirect to a success page.
-#        else:
-#            # Return a 'disabled account' error message
-#    else:
-#        # Return an 'invalid login' error message.
-
-        
 from django.template import loader, Context
 from django.http import HttpResponse
 from app.models import app
@@ -263,3 +143,52 @@ def archive(request):
     return HttpResponse(t.render(c))
 
 
+#Logowanie z tutoriala
+
+from django.shortcuts import render_to_response
+from django.http import HttpResponseRedirect
+from django.contrib import auth
+from django.core.context_processors import csrf
+from django.contrib.auth.forms import UserCreationForm
+
+
+def login(request):
+    c={}
+    c.update(csrf(request))
+    return render_to_response('app/login2.html',c);
+
+def auth_view(request):
+    username = request.POST.get('username','')
+    password = request.POST.get('password','')
+    user = auth.authenticate(username=username, password=password)
+
+    if user is not None:
+        auth.login(request, user)
+        return HttpResponseRedirect('/')
+    else:
+        return HttpResponseRedirect('/invalid')
+
+def log_in(request):
+    return render_to_response('app/log_in.html')
+
+def invalid_login(request):
+    return render_to_response('app/invalid_login.html')
+
+def logout(request):
+    auth.logout(request)
+    return render_to_response('app/logout.html');
+
+def register(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/register_success')
+    args = {}
+    args.update(csrf(request))
+    args['form'] = UserCreationForm()
+
+    return render_to_response('app/register.html',args)
+
+def register_success(request):
+    return render_to_response('app/register_success.html')

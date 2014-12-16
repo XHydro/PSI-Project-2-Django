@@ -22,6 +22,6 @@ class Book(models.Model):
     about = models.CharField(max_length = 150)
     #author = models.CharField(max_length = 50)
     timestamp = models.CharField(max_length = 4)
-    
-class Author(models.Model):
-    name = models.CharField(max_length = 50)
+    #timestamp = models.DateField()
+    #class Meta:
+    #    ordering = ('-timestamp',)
